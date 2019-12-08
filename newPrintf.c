@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:22:33 by helkhatr          #+#    #+#             */
-/*   Updated: 2019/12/08 04:33:06 by helkhatr         ###   ########.fr       */
+/*   Updated: 2019/12/08 08:56:46 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ int main(void)
     //int j = ft_printf("[%400.50p]\n", 0);
     //int c = ft_printf("%30d\n", 0);  //
     //int e = ft_printf("%07d\n", -54); //{return test("%8.3x", 8375);}
-    int j = ft_printf("%3u\n", 0);
-    int e = printf("%3d\n", 0);
+    int j = ft_printf("%5.0d\n", 0);
+    int e = printf("%5.0d\n", 0);
     printf("\n[%i][%i]", e, j);
     return (0);
 }
 
-/**/
+// /**/
