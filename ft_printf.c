@@ -1,261 +1,314 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Untitled-1.c                                       :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:08:51 by helkhatr          #+#    #+#             */
-/*   Updated: 2019/11/22 17:08:51 by helkhatr         ###   ########.fr       */
+/*   Updated: 2019/12/01 03:49:41 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdarg.h>
 #include "ft_printf.h"
- 
-size_t			ft_strlen(const char *s)
-{
-	size_t i;
 
-	i = 0;
-	while (*(s + i) != 0)
-	{
-		i++;
-	}
-	return (i);
-}
-
-
-
-void			ft_putchar(char c)
-{
-	write(1, (const void *)&c, 1);
-}
-
-void	ft_putstr(char const *s)
-{
-	int l;
-
-	if (s)
-	{
-		l = ft_strlen(s);
-		write(1, (const void *)s, l);
-	}
-}
-
-void	ft_putnbr_fd(int n, int fd)
-{
-	unsigned int nb;
-
-	if (n < 0)
-	{
-		ft_putchar('-');
-		nb = -n;
-	}
-	else
-		nb = n;
-	if (nb / 10)
-	{
-		ft_putnbr_fd(nb / 10, fd);
-		ft_putchar(nb % 10 + '0');
-	}
-	else
-		ft_putchar(nb % 10 + '0');
-}
-
-void	print_u(unsigned int n)
-{
-	unsigned int nb;
-
-	if (n < 0)
-	{
-		ft_putchar('-');
-		nb = -n;
-	}
-	else
-		nb = n;
-	if (nb / 10)
-	{
-		print_u(nb / 10);
-		ft_putchar(nb % 10 + '0');
-	}
-	else
-		ft_putchar(nb % 10 + '0');
-}
-
-char hex_digit(int v) 
-{
-    if (v >= 0 && v < 10)
-        return '0' + v;
-    else
-        return 'A' + v - 10;
-}
-
-void print_address_hex(void* p0) 
-{
-    int i;
-    uintptr_t p = (uintptr_t)p0;
-    i = (sizeof(p) << 3) - 4;
-    while (i>=0) 
-    {
-        ft_putchar(hex_digit((p >> i) & 0xf));
-         i -= 4;
-    }
-}
-
-static size_t	digit_count(long nb, int base)
-{
-	size_t		i;
-
-	i = 0;
-	while (nb)
-	{
-		nb /= base;
-		i++;
-	}
-	return (i);
-}
-
-char			*ft_itoa_base(int value, int base, int c)
-{
-	char	*ret;
-	char	*tab_base;
-	int		taille;
-	int		i;
-	int		sign;
-
-	if (base < 2 || base > 16)
-		return (0);
-	if (base == 10 && value == -2147483648)
-		return ("-2147483648");
-	sign = 0;
-	if (base == 10 && value < 0)
-		sign = 1;
-	if (value < 0)
-		value = -value;
-	if (value == 0)
-		return ("0");
-	tab_base = (char *)malloc(sizeof(char) * 17);
-    if(c == 'X')
-	    tab_base = "0123456789ABCDEF";
-    else
-        tab_base = "0123456789abcdef"; 
-	taille = digit_count(value, base);
-	taille += (sign ? 1 : 0);
-	ret = (char *)malloc(sizeof(char) * (taille + 1));
-	i = 1;
-	sign ? (ret[0] = '-') : 0;
-	while (value != 0)
-	{
-		ret[taille - i++] = tab_base[value % base];
-		value /= base;
-	}
-	ret[taille] = '\0';
-    free(tab_base);
-	return (ret);
-}
-
-void printf_flag(const char *flag,int *i)
-{
-    int j = *i + 1;
-        while (flag[j] != 'i' && flag[j] != 'd' && flag[j] != 'x' && flag[j] != 'X' && flag[j] != 'u' && flag[j] != 'p')
-        {
-            ft_putchar(flag[j]);
-            j++;
-        }
-    *i = j - 1;
-}
-
-int		ft_toupper(int c)
-{
-	if ((c >= 'a' && c <= 'z'))
-		return (c - 32);
-	else
-		return (c);
-}
-
-
-int simple_printf(const char* fmt, ...)
+int ft_printf(const char *fmt, ...)
 {
     int i;
     i = 0;
+    t_flag t;
     int count = 0;
     va_list args;
-    va_start(args, fmt);
- 
-    while (fmt[i] != '\0') 
+
+    va_start(t.args, fmt);
+    t.i = 0;
+    while (fmt[t.i] != '\0')
     {
-        if(fmt[i] == '%')
+        if (fmt[t.i] == '%')
         {
-            if (fmt[i+1] == 'd' | fmt[i+1] == 'i') 
+            // CheckFlags((char *)fmt, t);
+            if (fmt[i + 1] == 'k' | fmt[i + 1] == 'k')
             {
                 int it = va_arg(args, int);
-                count += digit_count(it,10);
-                ft_putnbr_fd(it,1);
-                count --;
+                count += digit_count(it, 10);
+                ft_putnbr_fd(it, 1);
+                count--;
                 i++;
             }
-            else if (fmt[i+1] == 'c') 
+            else if (fmt[i + 1] == 'c')
             {
                 int c = va_arg(args, int);
                 count += 1;
                 ft_putchar(c);
-                count --;
+                count--;
                 i++;
-            } 
-            else if (fmt[i+1] == 's') 
-            {
-                 char *s = va_arg(args, char *);
-                 count+=ft_strlen(s);
-                 ft_putstr(s);
-                 count --;
-                 i++;
             }
-            else if(fmt[i+1] == '%')
+            else if (fmt[i + 1] == 's')
+            {
+                char *s = va_arg(args, char *);
+                count += ft_strlen(s);
+                ft_putstr(s);
+                count--;
+                i++;
+            }
+            else if (fmt[i + 1] == '%')
             {
                 ft_putchar('%');
                 i++;
             }
-            else if(fmt[i+1]=='p')
+            else if (fmt[i + 1] == 'p')
             {
                 void *p = va_arg(args, void *);
                 print_address_hex(p);
                 i++;
             }
-            else if(fmt[i+1]=='x' | fmt[i+1]=='X')
+            else if (fmt[i + 1] == 'x' | fmt[i + 1] == 'X')
             {
-                int x =  va_arg(args,int);
-                count += ft_strlen(ft_itoa_base(x,16,fmt[i+1]));
-                ft_putstr(ft_itoa_base(x,16,fmt[i+1]));
+                int x = va_arg(args, int);
+                count += ft_strlen(ft_to_hexa(x, fmt[i + 1], x));
+                ft_putstr(ft_to_hexa(x, fmt[i + 1], x));
                 count--;
                 i++;
             }
-            else if(fmt[i+1]=='u')
+            else if (fmt[i + 1] == 'u')
             {
-                unsigned int u = va_arg(args,unsigned int);
-                count +=digit_count(u,10);
+                unsigned int u = va_arg(args, unsigned int);
+                count += digit_count(u, 10);
                 print_u(u);
                 count--;
                 i++;
             }
-            else if(fmt[i+1]==39)
+            else if (fmt[i + 1] == 39)
             {
-                printf_flag(fmt,&i);
+                printf_flag(fmt, &i);
             }
-            count --;
+            else if (fmt[i + 1] == '-')
+            {
+                int y = i + 2;
+                int u = 0;
+                char *tr = calloc(10, sizeof(char));
+                while (fmt[y] != 'i' && fmt[y] != 'd' && fmt[y] != 'x' && fmt[y] != 'X' && fmt[y] != 'u' && fmt[y] != 'p' && fmt[y] != 's')
+                {
+                    tr[u] = fmt[y];
+                    y++;
+                    u++;
+                }
+                i = y;
+                if (fmt[y] == 'i' || fmt[y] == 'd')
+                {
+                    int t = 0;
+                    y = ft_atoi(tr);
+
+                    int it = va_arg(args, int);
+                    int co = digit_count(it, 10);
+                    if (it < 0)
+                    {
+                        ft_putchar('-');
+                        it *= -1;
+                    }
+                    else
+                        count--;
+                    if (it)
+                        ft_putnbr_fd(it, 1);
+                    while (co < y)
+                    {
+                        ft_putchar(' ');
+                        y--;
+                        t++;
+                    }
+
+                    count--;
+                    count += y + t - u;
+                }
+                else if (fmt[y] == 's')
+                {
+                    y = ft_atoi(tr);
+                    char *s = va_arg(args, char *);
+                    ft_putnstr(s, y);
+                    count--;
+                    count -= u;
+                }
+                else if (fmt[y] == 'x' || fmt[y] == 'X')
+                {
+                    int t = 0;
+                    int x = va_arg(args, int);
+                    int co = ft_strlen(ft_to_hexa(x, fmt[i], x));
+                    y = ft_atoi(tr);
+                    count--;
+                    if (y > 512)
+                        y = 512;
+                    while (co < y)
+                    {
+                        ft_putnbr_fd(0, 1);
+                        y--;
+                        t++;
+                    }
+                    ft_putstr(ft_to_hexa(x, fmt[i], x));
+                    count--;
+                    count += y + t - u;
+                }
+            }
+            else if (fmt[i + 1] == '.')
+            {
+                int y = i + 2;
+                int u = 0;
+                char *tr = calloc(10, sizeof(char));
+                while (fmt[y] != 'i' && fmt[y] != 'd' && fmt[y] != 'x' && fmt[y] != 'X' && fmt[y] != 'u' && fmt[y] != 'p' && fmt[y] != 's')
+                {
+                    tr[u] = fmt[y];
+                    y++;
+                    u++;
+                }
+                i = y;
+                if (fmt[y] == 'i' || fmt[y] == 'd')
+                {
+                    int t = 0;
+                    y = ft_atoi(tr);
+
+                    int it = va_arg(args, int);
+                    int co = digit_count(it, 10);
+                    if (it < 0)
+                    {
+                        ft_putchar('-');
+                        it *= -1;
+                    }
+                    else
+                        count--;
+                    if (y > 512)
+                        y = 512;
+                    while (co < y)
+                    {
+                        ft_putnbr_fd(0, 1);
+                        y--;
+                        t++;
+                    }
+                    if (it)
+                        ft_putnbr_fd(it, 1);
+                    count--;
+                    count += y + t - u;
+                }
+                else if (fmt[y] == 's')
+                {
+                    y = ft_atoi(tr);
+                    char *s = va_arg(args, char *);
+                    ft_putnstr(s, y);
+                    count--;
+                    count -= u;
+                }
+                else if (fmt[y] == 'x' || fmt[y] == 'X')
+                {
+                    int t = 0;
+                    int x = va_arg(args, int);
+                    int co = ft_strlen(ft_to_hexa(x, fmt[i], x));
+                    y = ft_atoi(tr);
+                    count--;
+                    if (y > 512)
+                        y = 512;
+                    while (co < y)
+                    {
+                        ft_putnbr_fd(0, 1);
+                        y--;
+                        t++;
+                    }
+                    ft_putstr(ft_to_hexa(x, fmt[i], x));
+                    count--;
+                    count += y + t - u;
+                }
+            }
+            else if (ft_isdigit(fmt[i + 1]))
+            {
+                int c = i + 1;
+                int y = 0;
+                char *tr = calloc(10, sizeof(char));
+
+                while (ft_isdigit(fmt[c]))
+                {
+                    tr[y] = fmt[c];
+                    c++;
+                    y++;
+                }
+                i = c;
+                y = ft_atoi(tr);
+                while (y > 0)
+                {
+                    ft_putchar(' ');
+                    y--;
+                }
+                if (fmt[c] == '.')
+                {
+                    free(tr);
+                    tr = calloc(10, 1);
+                    c = i + 1;
+                    y = 0;
+                    while (fmt[c] != 'i' && fmt[c] != 'd' && fmt[c] != 'x' && fmt[c] != 'X' && fmt[c] != 'u' && fmt[c] != 'p' && fmt[c] != 's')
+                    {
+                        tr[y] = fmt[c];
+                        y++;
+                        c++;
+                    }
+                    i = c;
+                    if (fmt[c] == 'i' || fmt[c] == 'd')
+                    {
+                        int t = 0;
+                        c = ft_atoi(tr);
+                        int it = va_arg(args, int);
+                        int co = digit_count(it, 10);
+                        if (it < 0)
+                        {
+                            ft_putchar('-');
+                            it *= -1;
+                        }
+                        else
+                            count--;
+                        if (c > 512)
+                            c = 512;
+                        while (co < c)
+                        {
+                            ft_putnbr_fd(0, 1);
+                            c--;
+                            t++;
+                        }
+                        if (it)
+                            ft_putnbr_fd(it, 1);
+                        count--;
+                        count += c + t - y;
+                    }
+                    else if (fmt[c] == 's')
+                    {
+                        c = ft_atoi(tr);
+                        char *s = va_arg(args, char *);
+                        ft_putnstr(s, c);
+                        count--;
+                        count -= c;
+                    }
+                    else if (fmt[c] == 'x' || fmt[c] == 'X')
+                    {
+                        int t = 0;
+                        int x = va_arg(args, int);
+                        int co = ft_strlen(ft_to_hexa(x, fmt[i], x));
+                        c = ft_atoi(tr);
+                        count--;
+                        if (c > 512)
+                            c = 512;
+                        while (co < y)
+                        {
+                            ft_putnbr_fd(0, 1);
+                            c--;
+                            t++;
+                        }
+                        ft_putstr(ft_to_hexa(x, fmt[i], x));
+                        count--;
+                        count += c + t - y;
+                    }
+                }
+            }
+            count--;
         }
         else
             ft_putchar(fmt[i]);
         i++;
+        t.i++;
     }
     va_end(args);
-    return(count + i);
-}
- 
-int main(void)
-{
-  int c = simple_printf("123456789%X\n",0x3F);
-  int d = printf("123456789%X\n",0x3F);
-  printf("%i\n%d",c,d);
+    return (count + i);
 }
