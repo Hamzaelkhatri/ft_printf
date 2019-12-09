@@ -25,19 +25,6 @@ int ft_putstr(char const *s)
     return (0);
 }
 
-void ft_putnstr(char const *s, int i)
-{
-    char c;
-
-    while (*s != '\0' && 0 < i)
-    {
-        c = *s;
-        write(1, (const void *)&c, 1);
-        s++;
-        i--;
-    }
-}
-
 void ft_putnbr_fd(int n, int fd)
 {
     unsigned int nb;

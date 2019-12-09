@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:22:33 by helkhatr          #+#    #+#             */
-/*   Updated: 2019/12/08 04:00:21 by helkhatr         ###   ########.fr       */
+/*   Updated: 2019/12/08 09:14:21 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void presion_zero(char *fmt, t_flag *t)
             w = get_number(fmt, &i, t);
             t->x = va_arg(t->args, long);
             t->size = ft_strlen(ft_to_hexa(t->x, t->flage, t->x));
-            print_zero((w > t->size) ? w - t->size : t->size);
+            print_zero((w > t->size) ? w - t->size : 0);
             ft_putstr(ft_to_hexa(t->x, t->flage, t->x));
             t->len += (w > t->size) ? w : t->size;
             t->i = i;

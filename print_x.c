@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:08:51 by helkhatr          #+#    #+#             */
-/*   Updated: 2019/12/08 08:51:52 by helkhatr         ###   ########.fr       */
+/*   Updated: 2019/12/08 12:46:45 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,11 @@ int zero_w(char *fmt, t_flag *t, int p, int s, int w)
             t->len++;
         }
     }
-    else
+    else if (s == 0 && w != 0 && i != -1)
         ft_putchar('0');
-    return (0);
+    else if (s != -100)
+        ft_putchar(' ');
+    return (i);
 }
 
 void print_unsigned(char *fmt, t_flag *t, int w, int p)
