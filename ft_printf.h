@@ -41,6 +41,7 @@ void negative_presicion(char *fmt, t_flag *t);
 void presition_p_td(t_flag *t, char *fmt, int w, int p);
 void presionpoint(char *fmt, t_flag *t);
 void print_unsigned(char *fmt, t_flag *t, int w, int p);
+void *ft_calloc(unsigned int nitems, unsigned int size);
 int print_space(int p);
 char *ft_strdup(const char *str);
 void presionpoint_prime(char *fmt, t_flag *t);
