@@ -6,14 +6,13 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:22:33 by helkhatr          #+#    #+#             */
-/*   Updated: 2019/12/06 10:07:43 by helkhatr         ###   ########.fr       */
+/*   Updated: 2019/12/11 04:06:14 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-//#include "print_di.c"
 
-int CheckFlagsTwo(char *fmt, t_flag *t)
+int checkflagstwo(char *fmt, t_flag *t)
 {
     int i = t->i;
     if (fmt[i + 1] == 'p')
@@ -23,16 +22,17 @@ int CheckFlagsTwo(char *fmt, t_flag *t)
     else if (fmt[i + 1] == 'u')
         print_u(t, va_arg(t->args, unsigned int));
     else
-        Checkpresicion(fmt, t);
+        checkpresicion(fmt, t);
     return (t->i);
 }
 
-int CheckFlags(char *fmt, t_flag *t)
+int checkflags(char *fmt, t_flag *t)
 {
     int i;
     int y;
     int c;
     i = t->i;
+    t->frmt = ft_strdup(fmt);
     get_flage(fmt, t);
     if (fmt[i + 1] == 'i' || fmt[i + 1] == 'd')
         c = print_di(t, va_arg(t->args, int));
@@ -43,6 +43,6 @@ int CheckFlags(char *fmt, t_flag *t)
     else if (fmt[i + 1] == '%')
         c = print_m(t);
     else
-        c = CheckFlagsTwo(fmt, t);
+        c = checkflagstwo(fmt, t);
     return (c);
 }

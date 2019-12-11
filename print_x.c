@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:08:51 by helkhatr          #+#    #+#             */
-/*   Updated: 2019/12/08 12:46:45 by helkhatr         ###   ########.fr       */
+/*   Updated: 2019/12/11 04:07:58 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ int print_tr(int u, int p, int w, int size)
     }
 }
 
-int zero_w(char *fmt, t_flag *t, int p, int s, int w)
+int zero_w(t_flag *t, int p, int s, int w)
 {
     int i;
 
     i = t->i + 1;
-    while (fmt[i])
+    while (t->frmt[i])
     {
-        if (ft_strchr(".", fmt[i]))
+        if (ft_strchr(".", t->frmt[i]))
         {
             i = -1;
             break;
@@ -83,17 +83,17 @@ void print_unsigned(char *fmt, t_flag *t, int w, int p)
         {
             if (p >= w)
             {
-                ts = print_zero((p > t->size ? p - t->size : t->size)) + ((t->u == 0 && p == 0) ? zero_w(fmt, t, p, t->u, w) : print_u(t, t->u));
+                ts = print_zero((p > t->size ? p - t->size : t->size)) + ((t->u == 0 && p == 0) ? zero_w(t, p, t->u, w) : print_u(t, t->u));
                 t->len += (t->size > p ? 0 : p - t->size) + (t->u == 0 && p == 0 ? 1 : 0);
             }
             else
             {
-                ts += print_space(w > t->size ? w - (p > t->size ? p : t->size) : t->size) + print_zero(p - t->size) + ((t->u == 0 && p == 0) ? zero_w(fmt, t, p, t->u, w) : print_u(t, t->u));
+                ts += print_space(w > t->size ? w - (p > t->size ? p : t->size) : t->size) + print_zero(p - t->size) + ((t->u == 0 && p == 0) ? zero_w(t, p, t->u, w) : print_u(t, t->u));
                 t->len += (t->size > w ? 0 : w - t->size) + (t->u == 0 ? 1 : 0);
             }
         }
         else
-            ((t->u == 0 && p == 0) ? zero_w(fmt, t, p, t->u, w) : print_u(t, t->u));
+            ((t->u == 0 && p == 0) ? zero_w(t, p, t->u, w) : print_u(t, t->u));
     }
     else
     {
@@ -102,17 +102,17 @@ void print_unsigned(char *fmt, t_flag *t, int w, int p)
         {
             if (p >= w)
             {
-                ts = print_zero(p - t->size) + ((t->u == 0 && p == 0) ? zero_w(fmt, t, p, t->u, w) : print_u(t, t->u));
+                ts = print_zero(p - t->size) + ((t->u == 0 && p == 0) ? zero_w(t, p, t->u, w) : print_u(t, t->u));
                 t->len += (t->size > p ? 0 : p - t->size);
             }
             else
             {
-                ts += print_zero(p - t->size) + ((t->u == 0 && p == 0) ? zero_w(fmt, t, p, t->u, w) : print_u(t, t->u)) + print_space(w > t->size ? w - (p > t->size ? p : t->size) : t->size);
+                ts += print_zero(p - t->size) + ((t->u == 0 && p == 0) ? zero_w(t, p, t->u, w) : print_u(t, t->u)) + print_space(w > t->size ? w - (p > t->size ? p : t->size) : t->size);
                 t->len += (t->size > w ? 0 : w - t->size);
             }
         }
         else
-            ((t->u == 0 && p == 0) ? zero_w(fmt, t, p, t->u, w) : print_u(t, t->u));
+            ((t->u == 0 && p == 0) ? zero_w(t, p, t->u, w) : print_u(t, t->u));
     }
 }
 
@@ -131,18 +131,18 @@ void print_intger(char *fmt, t_flag *t, int w, int p)
         {
             if (p > w)
             {
-                ts = print_neg(&t->it, w) + print_zero((p > t->size ? p - t->size : 0) + (y >= 0 ? 0 : 1)) + ((t->it == 0 && p == 0) ? zero_w(fmt, t, p, t->it, w) : print_di(t, t->it));
+                ts = print_neg(&t->it, w) + print_zero((p > t->size ? p - t->size : 0) + (y >= 0 ? 0 : 1)) + ((t->it == 0 && p == 0) ? zero_w(t, p, t->it, w) : print_di(t, t->it));
                 t->len += (p > t->size ? p - t->size : 0) + (y >= 0 ? 0 : 2);
             }
             else
             {
-                ts = print_space(w > t->size ? w - (p > t->size ? p - (y >= 0 ? 0 : -1) : t->size) : t->size) + print_neg(&t->it, w) + print_zero((p > t->size ? p - t->size : p - w) + (y >= 0 ? 0 : 1)) + ((t->it == 0 && p == 0) ? zero_w(fmt, t, p, t->it, w) : print_di(t, t->it));
+                ts = print_space(w > t->size ? w - (p > t->size ? p - (y >= 0 ? 0 : -1) : t->size) : t->size) + print_neg(&t->it, w) + print_zero((p > t->size ? p - t->size : p - w) + (y >= 0 ? 0 : 1)) + ((t->it == 0 && p == 0) ? zero_w(t, p, t->it, w) : print_di(t, t->it));
                 t->len += (w > t->size ? w - t->size : 0) + (y >= 0 ? 0 : 2);
             }
         }
         else
         {
-            ((t->it == 0 && p == 0) ? zero_w(fmt, t, p, t->it, w) : print_di(t, t->it));
+            ((t->it == 0 && p == 0) ? zero_w(t, p, t->it, w) : print_di(t, t->it));
         }
     }
     else
@@ -153,18 +153,18 @@ void print_intger(char *fmt, t_flag *t, int w, int p)
 
             if (p > w)
             {
-                ts = print_neg(&t->it, w) + print_zero((p > t->size ? p - t->size : 0) + (y >= 0 ? 0 : 1)) + ((t->it == 0 && p == 0) ? zero_w(fmt, t, p, t->it, w) : print_di(t, t->it)) + ((t->it == 0 && p == 0) ? zero_w(fmt, t, p, t->it, w) : 0);
+                ts = print_neg(&t->it, w) + print_zero((p > t->size ? p - t->size : 0) + (y >= 0 ? 0 : 1)) + ((t->it == 0 && p == 0) ? zero_w(t, p, t->it, w) : print_di(t, t->it)) + ((t->it == 0 && p == 0) ? zero_w(t, p, t->it, w) : 0);
                 t->len += (p > t->size ? p - t->size : 0) + (y >= 0 ? 0 : 2);
             }
             else
             {
-                ts = print_neg(&t->it, w) + print_zero((p > t->size ? p - t->size : p - w) + (y >= 0 ? 0 : 1)) + ((t->it == 0 && p == 0) ? zero_w(fmt, t, p, t->it, w) : print_di(t, t->it)) + print_space(w > t->size ? w - (p > t->size ? p - (y >= 0 ? 0 : -1) : t->size) : t->size);
+                ts = print_neg(&t->it, w) + print_zero((p > t->size ? p - t->size : p - w) + (y >= 0 ? 0 : 1)) + ((t->it == 0 && p == 0) ? zero_w(t, p, t->it, w) : print_di(t, t->it)) + print_space(w > t->size ? w - (p > t->size ? p - (y >= 0 ? 0 : -1) : t->size) : t->size);
                 t->len += (w > t->size ? w - t->size : 0) + (y >= 0 ? 0 : 1);
             }
         }
         else
         {
-            ((t->it == 0 && p == 0) ? zero_w(fmt, t, p, t->it, w) : print_di(t, t->it));
+            ((t->it == 0 && p == 0) ? zero_w(t, p, t->it, w) : print_di(t, t->it));
         }
     }
 }

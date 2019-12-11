@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:22:33 by helkhatr          #+#    #+#             */
-/*   Updated: 2019/12/05 00:31:59 by helkhatr         ###   ########.fr       */
+/*   Updated: 2019/12/11 04:05:29 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void negative_presicion(char *fmt, t_flag *t)
     t->i = i - 1;
     if (y == 0)
         y = ft_atoi(tr);
-    i = y - CheckFlags(fmt, t);
+    i = y - checkflags(fmt, t);
     i--;
     print_space(i);
     t->len += i;

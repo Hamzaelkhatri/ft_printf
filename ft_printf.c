@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:08:51 by helkhatr          #+#    #+#             */
-/*   Updated: 2019/12/01 03:49:41 by helkhatr         ###   ########.fr       */
+/*   Updated: 2019/12/11 04:05:29 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int ft_printf(const char *fmt, ...)
     {
         if (fmt[t.i] == '%')
         {
-            // CheckFlags((char *)fmt, t);
+            // checkflags((char *)fmt, t);
             if (fmt[i + 1] == 'k' | fmt[i + 1] == 'k')
             {
                 int it = va_arg(args, int);

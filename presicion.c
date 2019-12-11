@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:22:33 by helkhatr          #+#    #+#             */
-/*   Updated: 2019/12/06 10:32:05 by helkhatr         ###   ########.fr       */
+/*   Updated: 2019/12/11 04:04:04 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int checkneg(char *fmt, t_flag *t)
     return (1);
 }
 
-int Checkpresicion(char *fmt, t_flag *t)
+int checkpresicion(char *fmt, t_flag *t)
 {
     int i;
     char *tr;

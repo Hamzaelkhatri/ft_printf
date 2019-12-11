@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:22:33 by helkhatr          #+#    #+#             */
-/*   Updated: 2019/12/08 10:10:19 by helkhatr         ###   ########.fr       */
+/*   Updated: 2019/12/11 04:09:21 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,17 @@ void hexa_presition(int w, int p, t_flag *t, char *fmt)
         {
             if (p >= w)
             {
-                ts += print_zero(p - t->size) + ((t->x == 0 && p == 0) ? zero_w(fmt, t, p, t->x, w) : print_hexa(t, t->x, t->flage)) - t->size - 1;
+                ts += print_zero(p - t->size) + ((t->x == 0 && p == 0) ? zero_w(t, p, t->x, w) : print_hexa(t, t->x, t->flage)) - t->size - 1;
                 t->len += (p > t->size ? p - t->size : t->size);
             }
             else
             {
-                ts = print_space(naas(w, p, t)) + print_zero(p - t->size) + ((t->x == 0 && p == 0) ? zero_w(fmt, t, p, t->it, w) : print_hexa(t, t->x, t->flage) - t->size - 1);
+                ts = print_space(naas(w, p, t)) + print_zero(p - t->size) + ((t->x == 0 && p == 0) ? zero_w(t, p, t->x, w) : print_hexa(t, t->x, t->flage) - t->size - 1);
                 t->len += (w > t->size ? w - t->size : t->size);
             }
         }
         else
-            ((t->x == 0 && p == 0) ? zero_w(fmt, t, p, t->x, w) : print_hexa(t, t->x, t->flage));
+            ((t->x == 0 && p == 0) ? zero_w(t, p, t->x, w) : print_hexa(t, t->x, t->flage));
     }
     else
     {
@@ -89,16 +89,16 @@ void hexa_presition(int w, int p, t_flag *t, char *fmt)
         {
             if (p >= w)
             {
-                ts += print_zero(p - t->size) + ((t->x == 0 && p == 0) ? zero_w(fmt, t, p, t->x, w) : print_hexa(t, t->x, t->flage)) - t->size - 1;
+                ts += print_zero(p - t->size) + ((t->x == 0 && p == 0) ? zero_w(t, p, t->x, w) : print_hexa(t, t->x, t->flage)) - t->size - 1;
                 t->len += (p > t->size ? p - t->size : t->size);
             }
             else
             {
-                ts += print_zero(p - t->size) + ((t->x == 0 && p == 0) ? zero_w(fmt, t, p, t->x, w) : print_hexa(t, t->x, t->flage)) + print_space(naas(w, p, t)) - t->size - 1;
+                ts += print_zero(p - t->size) + ((t->x == 0 && p == 0) ? zero_w(t, p, t->x, w) : print_hexa(t, t->x, t->flage)) + print_space(naas(w, p, t)) - t->size - 1;
                 t->len += (w > t->size ? w - t->size : t->size);
             }
         }
         else
-            ((t->x == 0 && p == 0) ? zero_w(fmt, t, p, t->x, w) : print_hexa(t, t->x, t->flage));
+            ((t->x == 0 && p == 0) ? zero_w(t, p, t->x, w) : print_hexa(t, t->x, t->flage));
     }
 }
