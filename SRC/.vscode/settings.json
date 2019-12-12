@@ -1,5 +1,5 @@
 {
     "files.associations": {
-        "./include/ft_printf.h": "c"
+        "ft_printf.h": "c"
     }
 }

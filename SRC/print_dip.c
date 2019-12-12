@@ -6,11 +6,11 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 20:18:35 by helkhatr          #+#    #+#             */
-/*   Updated: 2019/12/11 05:24:18 by helkhatr         ###   ########.fr       */
+/*   Updated: 2019/12/12 21:35:18 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../include/ft_printf.h"
 
 size_t			digit_count(long nb, int base)
 {
@@ -40,7 +40,7 @@ char			hex_digit(int v)
 		return ('a' + v - 10);
 }
 
-int				print_address_hex(void *p0, int *len, int b, t_flag *t)
+int				print_address_hex(void *p0, int *len, int b)
 {
 	int			i;
 	char		*tmp;
@@ -85,7 +85,7 @@ int				print_p(t_flag *t, void *p)
 	int l;
 
 	l = t->len;
-	print_address_hex(p, &t->len, 0, t);
+	print_address_hex(p, &t->len, 0);
 	t->i++;
 	return (t->len - l);
 }

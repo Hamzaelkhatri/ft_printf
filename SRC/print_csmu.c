@@ -6,11 +6,11 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:08:51 by helkhatr          #+#    #+#             */
-/*   Updated: 2019/12/11 04:42:37 by helkhatr         ###   ########.fr       */
+/*   Updated: 2019/12/12 21:35:18 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../include/ft_printf.h"
 
 int		print_c(t_flag *t, int c)
 {

@@ -6,11 +6,11 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:22:33 by helkhatr          #+#    #+#             */
-/*   Updated: 2019/12/11 04:23:09 by helkhatr         ###   ########.fr       */
+/*   Updated: 2019/12/12 21:35:18 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../include/ft_printf.h"
 
 void	ft_putnstr(char const *s, int i)
 {
@@ -34,9 +34,10 @@ void	presionpoint(char *fmt, t_flag *t)
 	int i;
 	int w;
 	int p;
-	int d;
 
 	i = t->i + 1;
+	w = 0;
+	p = 0;
 	if (fmt[i + 1] == '-')
 		i += zapper_neg(&fmt[i], 1);
 	if (t->flage == 'd' || t->flage == 'i')
@@ -45,7 +46,7 @@ void	presionpoint(char *fmt, t_flag *t)
 		p = get_number(fmt, &i, t);
 		t->it = va_arg(t->args, int);
 		t->size = digit_count(t->it, 10);
-		print_intger(fmt, t, w, p);
+		print_intger(t, w, p);
 		t->i = i;
 	}
 	else
@@ -67,12 +68,12 @@ void	presionpoint_trime(char *fmt, t_flag *t)
 		p = get_number(fmt, &i, t);
 		t->s = va_arg(t->args, char *);
 		t->size = (!t->s ? 6 : ft_strlen(t->s));
-		presicion_str(fmt, t, w, p);
+		presicion_str(t, w, p);
 		t->i = i;
 	}
 }
 
-void	ft_pre_td(char *fmt, t_flag *t, int w, int p)
+void	ft_pre_td(t_flag *t, int w, int p)
 {
 	zero_w(t, -100, -100, -100) == -1 ? print_space(w - p)
 		: print_space(w - t->size);

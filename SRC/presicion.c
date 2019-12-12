@@ -6,11 +6,11 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:22:33 by helkhatr          #+#    #+#             */
-/*   Updated: 2019/12/11 04:40:07 by helkhatr         ###   ########.fr       */
+/*   Updated: 2019/12/12 21:35:18 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../include/ft_printf.h"
 
 int		get_n(char *fmt, int c, int *i)
 {
@@ -69,7 +69,6 @@ int		checkneg(char *fmt, t_flag *t)
 int		checkpresicion(char *fmt, t_flag *t)
 {
 	int		i;
-	char	*tr;
 
 	i = t->i + 1;
 	i = t->i + 1;

@@ -6,13 +6,13 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 11:21:07 by osamoile          #+#    #+#             */
-/*   Updated: 2019/12/11 04:21:48 by helkhatr         ###   ########.fr       */
+/*   Updated: 2019/12/12 21:35:18 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../include/ft_printf.h"
 
-void	ft_pre(int p, int w, t_flag *t, char *fmt)
+void	ft_pre(int p, int w, t_flag *t)
 {
 	int y;
 
@@ -35,7 +35,7 @@ void	ft_pre(int p, int w, t_flag *t, char *fmt)
 	}
 }
 
-void	ft_pre_str(int p, int w, t_flag *t, char *fmt)
+void	ft_pre_str(int p, int w, t_flag *t)
 {
 	if (p > w)
 	{
@@ -57,22 +57,23 @@ void	ft_pre_str(int p, int w, t_flag *t, char *fmt)
 	}
 }
 
-void	presicion_str(char *fmt, t_flag *t, int w, int p)
+void	presicion_str(t_flag *t, int w, int p)
 {
 	int ts;
 
+	ts = 0;
 	if (w >= 0)
 	{
 		if (t->size <= w || t->size <= p)
-			ft_pre_str(p, w, t, fmt);
+			ft_pre_str(p, w, t);
 		else
-			ft_pre_td(fmt, t, w, p);
+			ft_pre_td(t, w, p);
 	}
 	else
 	{
 		w *= -1;
 		if (t->size <= w || t->size <= p)
-			ft_pre(p, w, t, fmt);
+			ft_pre(p, w, t);
 		else
 		{
 			zero_w(t, -100, -100, -100) == -1
@@ -108,7 +109,7 @@ void	presionpoint_prime(char *fmt, t_flag *t)
 		p = get_number(fmt, &i, t);
 		t->x = va_arg(t->args, long);
 		t->size = ft_strlen(ft_to_hexa(t->x, t->flage, t->x));
-		hexa_presition(w, p, t, fmt);
+		hexa_presition(w, p, t);
 		t->i = i;
 	}
 	else
@@ -135,7 +136,7 @@ void	presition_p_td(t_flag *t, char *fmt, int w, int p)
 		p = get_number(fmt, &i, t);
 		t->u = va_arg(t->args, unsigned int);
 		t->size = digit_count(t->u, 10);
-		print_unsigned(fmt, t, w, p);
+		print_unsigned(t, w, p);
 		t->i = i;
 	}
 	else

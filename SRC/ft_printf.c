@@ -1,28 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_flage.c                                        :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:22:33 by helkhatr          #+#    #+#             */
-/*   Updated: 2019/12/04 07:35:37 by helkhatr         ###   ########.fr       */
+/*   Updated: 2019/12/12 21:35:18 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../include/ft_printf.h"
 
-void get_flage(char *fmt, t_flag *t)
+int		ft_putchar(char c)
 {
-    int i;
-    i = t->i + 1;
-    while (fmt[i])
-    {
-        if (ft_strchr("cspdiuxX%%", fmt[i]))
-        {
-            t->flage = fmt[i];
-            break;
-        }
-        i++;
-    }
+	write(1, (const void *)&c, 1);
+	return (1);
+}
+
+int		ft_printf(const char *fmt, ...)
+{
+	t_flag t;
+
+	t.flage = ' ';
+	t.i = 0;
+	t.size = 0;
+	t.len = 0;
+	va_start(t.args, fmt);
+	while (fmt[t.i] != '\0')
+	{
+		if (fmt[t.i] == '%')
+			checkflags((char *)fmt, &t);
+		else
+		{
+			ft_putchar(fmt[t.i]);
+			t.len++;
+		}
+		t.i++;
+	}
+	return (t.len);
 }
