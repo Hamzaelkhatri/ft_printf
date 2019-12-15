@@ -1,8 +1,6 @@
 # ft_printf
 This project is a copy of the original printf function of C langage.
 
-This code complies with the 42 school norm: https://github.com/Ysrbolles/ft_printf/blob/master/norm.pdf
-
 ## Features
 
 Supports all these converters, flags and modifiers:
